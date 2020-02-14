@@ -10,40 +10,10 @@ function start(){
      // To allow to pause animation
     let play = true;
     
-    document.addEventListener('keypress',function(event){
-        if(event.code == "Space"){
-            if(play){
-                play = !play;
-                console.log("Paused !")
-            }
-            else{
-                play = !play;
-                window.requestAnimationFrame(animation);
-                console.log("Unpaused !");
-            }
-        }
-    },false);
-
-    // imprecise on edges
-    document.addEventListener('click',function(event){
-        let clickX = event.clientX+scrollX;
-        let clickY = event.clientY+scrollY;
-        //console.log(clickX+"/"+clickY);
-        drawList.getList().forEach(element => {
-            try{
-                if((clickX < element.newPosX+element.radius && clickX > element.newPosX-element.radius)
-                && (clickY < element.newPosY+element.radius && clickY > element.newPosY-element.radius)){
-                    if(!(element instanceof TextZone)){
-                        console.log(element.name);
-                    }       
-                }
-            }
-            catch(error){
-                console.log("onClickDetection " + error);
-            }
-            
-        });
-    },false);
+    let lis = new Listeners();
+    lis.lis_pause(play);
+    lis.lis_planetClick(drawList);
+   
 
     // FpsCounter start
     let fps = new FpsCounter(3000);
